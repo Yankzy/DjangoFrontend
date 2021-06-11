@@ -1,0 +1,164 @@
+{% extends 'users/elegant.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load humanize %}
+{% load my_custom_tags %}
+
+
+{% block main %}
+
+
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+
+        
+        <div class="col-lg-12" id="pdiv">
+          <!-- <a href="#" class="js-print-link">Click Me To Print</a> -->
+
+           
+            <!-- Page Heading -->
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <div class="container">
+                    <div class="row">
+                        <div class="span4">
+                            <div class="container" id="table">
+                              <div class="printarea" id="printareaid"> 
+                                <table class="addr-table" >
+                                  <tbody>
+                                    <tr>
+                                      <td colspan="7">Paystub</td>
+                                      <td>{{ employee.next_pay_date |date:' M jS Y ' }}</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                      <td colspan="6">
+                                        {% if request.user.profile.logo %}
+                                          <img src="{{ request.user.profile.logo.url }}" style="float:center;width:120px;height:120px;"/></td>
+                                        {% else %}
+                                          <img src="https://img.icons8.com/fluent/48/000000/microsoft-paint.png" style="float:center;width:120px;height:120px;"/></td>
+                                        {% endif %}
+                                      <td colspan="2" style="text-align:left">
+                                      <div >
+                                        <div><strong.>Company Information:</strong></div>
+                                        <div>{{ request.user.profile.company }}</div>
+                                        <div>{{ request.user.profile.street_address }}</div>
+                                        <div> {{ request.user.profile.state }} {{ request.user.profile.zip_code }} </div>
+                                      </div>
+                                      </td>
+                                      
+                                      
+                                    </tr>
+                                    
+                                <tr>
+                                      <td colspan="6" style="text-align:left;font-size:18px;word-spacing:1.6px;font-weight:600">Pay to the order of : {{ employee.full_name }}</td>
+                                      <td style="text-align:left;font-size:18px;word-spacing:1.6px;font-weight:600;background-color:#a8d0f3">Net Pay: </td>
+                                      <td style="text-align:left;font-size:18px;word-spacing:1.6px;font-weight:600;background-color:#a8d0f3">${{ employee.gross_wages|subtract:employee.taxes |floatformat:2 |intcomma }}</td>
+                                </tr>   
+                                <tr style="background-color:#428bca">
+                                  <th colspan="6"  border:0px>Employee Information</th>
+                                  <th colspan="2"  border:0px>Reporting Period</th>
+                                </tr>
+                                <tr>
+                                  <td data-th="Employee Information:" colspan="6"> 
+                                    <div >
+                                      <div>{{ employee.full_name }}</div>
+                                      <div>{{ employee.street_address }}</div>
+                                      <div>{{ employee.state }}, {{ employee.zip_code }}</div>
+                                        
+                                  </td>
+                                  <td data-th="Period:" colspan="2"> {{ employee.min_date|date:' m/d/y ' }} - {% now ' m/d/y ' %}</td>
+                                </tr>
+                                
+                                <tr style="background-color:#428bca" >
+                                  <th>Earnings</th>
+                                  <th>Rate</th>
+                                  <th>Hours</th>
+                                  <th>Gross Pay</th>
+                                  <th>YTD Gross Pay</th>
+                                  <th>Deductions</th>
+                                  <th>Current Deductions</th>
+                                  <th>YTD Deductions</th>
+                                </tr>
+                                <tr>
+                                  <td data-th="Earnings:"> Regular Earnings </td>
+                                  <td data-th="Rate:"> ${{ employee.hourly_rate |floatformat:2 |intcomma  }}</td>
+                                  <td data-th="Hours:"> ${{ employee.hours_int |floatformat:2 |intcomma   }}</td>
+                                  <td data-th="Gross Pay:"> ${{ employee.gross_wages |floatformat:2 |intcomma   }}</td>
+                                  <td data-th="YTD Gross Pay:"> ${{ employee.ytd_wages |floatformat:2 |intcomma   }}</td>
+                                  <td data-th="Deduction:"> Fed Income Tax</td>
+                                  <td data-th="Current Deductions:">${{ employee.federal_income |floatformat:2 |intcomma   }}</td>
+                                  <td data-th="YTD Deductions:">${{ employee.ytd_federal_income |floatformat:2 |intcomma   }}</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="5"></td>
+                                  <td data-th="Deduction:"> Social Security</td>
+                                  <td data-th="Current Deductions:">${{ employee.social_security_tax |floatformat:2 |intcomma   }}</td>
+                                  <td data-th="YTD Deductions:">${{ employee.ytd_wages|multiply:0.124 |floatformat:2 |intcomma }}</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="5"></td>
+                                  <td data-th="Deduction:"> Medicare</td>
+                                  <td data-th="Current Deductions:">${{ employee.medicare |floatformat:2 |intcomma }}</td>
+                                  <td data-th="YTD Deductions:">${{ employee.ytd_wages|multiply:0.029 |floatformat:2 |intcomma }}</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="5"></td>
+                                  <td data-th="Deduction:"> L&I</td>
+                                  <td data-th="Current Deductions:">${{ employee.labor_and_industry |floatformat:2 |intcomma }}</td>
+                                  <td data-th="YTD Deductions:">${{ employee.ytd_hours|multiply:0.09365 |floatformat:2 |intcomma }}</td>
+                                </tr> 
+                                <tr>
+                                  <td colspan="5"></td>
+                                  <td data-th="Deduction:"> PF & ML</td>
+                                  <td data-th="Current Deductions:">${{ employee.family_and_medical_paid_leave |floatformat:2 |intcomma }}</td>
+                                  <td data-th="YTD Deductions:">${{ employee.ytd_wages|multiply:0.0025332 |floatformat:2 |intcomma }}</td>
+                                </tr>  
+                                <tr style="background-color:#428bca" >
+                                  <td colspan="3">Total</td>
+                                  <td data-th="Gross Pay:">${{ employee.gross_wages|floatformat:2 |intcomma }}</td>
+                                  <td data-th="YTD Gross Pay:" colspan="2">${{ employee.ytd_wages |floatformat:2 |intcomma }}</td>
+                                  <td data-th="Current Deductions:">${{ employee.taxes |floatformat:2 |intcomma }}</td>
+                                  <td data-th="YTD Deductions:">${{ employee.ytd_deductions |floatformat:2 |intcomma }}</td>
+                                </tr>
+                                  </tbody>
+                                </table>
+                                
+                                 <table class="bottom-table" style="float:right;margin-right:20%;margin-top:20px">
+                                  <tbody>
+                                    <tr>
+                                      <td colspan="3" style="text-align:left;font-size:17px; letter-spacing:0px;word-spacing:1.6px;font-weight:450;color:#080808;padding:5px;background-color:#a8d0f3"> Net Pay: </td>
+                                      <td style="text-align:left;font-size:17px; letter-spacing:0px;word-spacing:1.6px;color:#ffffff;font-weight:450;padding:5px;background-color:#428bca">${{ employee.gross_wages|subtract:employee.taxes |floatformat:2 |intcomma }}</td>
+                                 
+                                    </tr>
+                                      <td colspan="3" style="text-align:left;font-size:17px; letter-spacing:0px;word-spacing:1.6px;font-weight:450;color:#080808;background-color:#a8d0f3;padding: 5px">YTD Net: </td>
+                                      <td style="text-align:left;font-size:17px; letter-spacing:0px;word-spacing:1.6px;color:#ffffff;font-weight:450;padding:5px;background-color:#428bca"> ${{ employee.ytd_net_pay |floatformat:2 |intcomma  }}</td>
+                                    </tr>
+                                  </tbody>
+                                 </table>
+                                </div>
+         			
+
+                              </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+         <input id="print" onclick="printContent('table');" type="image" id="image" alt="print" src="https://img.icons8.com/cute-clipart/64/000000/print.png" style="float:right;width:60px;height:60px;">
+
+	
+	</div>
+        <!-- /.container-fluid -->
+
+        
+
+    </div>
+    <!-- End of Main Content -->
+
+    
+
+
+    
+
+{% endblock %}

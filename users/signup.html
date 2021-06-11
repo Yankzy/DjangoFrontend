@@ -1,0 +1,47 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+{% load get_obj from my_custom_tags %}
+{% block content %}
+
+
+    <!-- Header -->
+    <header id="header" class="ex-2-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>Sign Up</h1>
+                   <p>Already signed up? <a class="white" href=" {% url 'login' %}">Log In</a> here.</p> 
+                    <!-- Sign Up Form -->
+                    <div class="form-container">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {{ form|crispy }}
+
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="form-group checkbox">
+                                <!-- <input type="checkbox" id="sterms" value="Agreed-to-Terms" required>I agree with Dojo Payroll's <a href="privacy-policy.html">Privacy Policy</a> and <a href="terms-conditions.html">Terms Conditions</a> -->
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="form-control-submit-button">SIGN UP</button>
+                            </div>
+                            
+                        </form>
+                    </div> <!-- end of form container -->
+                    <!-- end of sign up form -->
+
+                </div> <!-- end of col -->
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </header> <!-- end of ex-header -->
+    <!-- end of header -->
+
+
+
+{% endblock content  %}
+
+   

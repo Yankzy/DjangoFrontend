@@ -1,0 +1,94 @@
+{% extends 'users/elegant.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load humanize %}
+{% load mathfilters %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+
+{% block main %}
+
+
+
+    <div class="container-fluid">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        
+        <div class="row">
+            <!-- column -->
+            <div class="col-12">
+                <div class="card">
+                    
+                    <div class="table-responsive">
+                        <p style="margin-top: 15px;">
+                            <a href="{% url 'add_employees' %}">
+                                <button type="button" class="btn btn-primary">
+                                <span class="glyphicon fas fa-plus"></span>
+                                Employee
+                                </button>
+                            </a>
+                            
+                        </p>
+
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>NAME</th>
+                                    <th>Rate/hour</th>
+                                    <th>Hours</th>
+                                    <th>Gross Pay</th>
+                                    <th>Pay Date</th>
+                                    <th>Frequency</th>
+                                    <th>State</th>
+                                    <th>Paystub</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% if messages %}
+                            {% for message in messages %}
+                                <p class="alert alert-info">{{ message }}</p>
+                            {% endfor %}
+                            {% endif %}
+                    
+                    
+                            {% for em in employee %}
+                            
+                                <tr>
+                                    <td>{{ em.pk }}</td>
+                                    <td><a href="{% url 'edit_employee' em.pk  %}">{{ em.full_name }}</a></td>
+                                    <td>${{ em.hourly_rate |floatformat:2 |intcomma  }}</td>
+                                    <td><a href="{% url 'hours_list' em.pk  %}">{{ em.hours_int |floatformat:2 |intcomma }}</a></td>
+                                    <td>${{ em.gross_wages |floatformat:2 |intcomma  }}</td>
+                                    <td>{{ em.next_pay_date |date:' M jS ' }}</td>
+                                    <td>{{ em.pay_frequency }}</td>
+                                    <td>{{ em.state }}</td>
+                                    <td><a href="{% url 'paystub' em.pk %}">pdf</a></td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                  <td colspan="8" class="text-center bg-warning">Employees will appear here</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        
+
+                        <!-- THE MODAL WE WILL BE USING -->
+                        <div class="modal fade" id="modal-employee">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+{% endblock %}

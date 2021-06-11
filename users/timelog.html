@@ -1,0 +1,116 @@
+{% extends 'users/elegant.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load humanize %}
+
+
+{% block title %}
+    Dashboard {{ emp.full_name }} employee - {{ block.super }}
+{% endblock %}
+
+
+{% block main %}
+
+
+    <div class="media post-meta">
+        <div class="media-left">
+            <a href="#">
+                <img alt="64x64" class="media-object" data-src="holder.js/64x64"
+                 src="C:\Users\Yankz\Google Drive\Python Sheet\automate\media\profile_pics\yankz.jpeg" 
+                 data-holder-rendered="true" style="width: 64px; height: 64px;">
+            </a>
+        </div>
+        <div class="media-body">
+            <h4 class="media-heading">Timesheet of {{ emp.full_name }} </h4>
+            <p>As of {% now " F jS Y " %}</p>
+            
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Total Hours</th>
+                    <th>Earned Wages</th>
+                    <th>Next pay Date</th>
+                
+                </tr>
+            </thead>
+        </div>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p class="alert alert-info">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Start Shift</th>
+            <th>End Shift</th>
+            <th>Hours Worked</th>
+            <th>Total Hours</th>
+            <th>Earned Wages</th>
+            <th>Next pay Date</th>
+           
+        </tr>
+        </thead>
+        {% for emp in employee  %}
+        <tbody>
+           
+                
+                    <tr>
+                        <!-- <td><i class="fas fa-globe"></i>
+                            <a href=""></a> -->
+                        </td>
+                        <td>{{ emp.id }}</td>
+                        <td><a href="{% url 'edit-employee' emp.pk %} ">{{ emp.full_name|title }}</a></td>
+                        <td>{{ emp.pay_frequency }}</td>
+                        <td>{{ emp.hourly_rate }}</td>
+                        
+                    </tr>
+                
+            
+            </tbody>
+            {% endfor %}
+
+
+
+
+        <tbody>
+        {% for emp in employee %}
+            {% if user.id == employer_id %}
+            
+                <tr>
+                    <td><i class="fas fa-globe"></i>
+                        <a href=""></a>
+                    </td>
+                    <td>{{ emp.hourly_rate }}</td>
+                    <td>{{ emp.pay_frequency|capfirst }}</td>
+                    <td>{{ emp.created_on|capfirst }}</td>
+                    <td><a href="{{ snippet.language.get_absolute_url }}">{{ snippet.language }}</a></td>
+                </tr>
+                {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {#  display pagination links  #}
+    {% if employee.paginator.num_pages > 1 %}
+        <nav aria-label="...">
+            <ul class="pager">
+
+                <li>Page {{ employee.number }} of {{ employee.paginator.num_pages }}</li>
+
+                {% if employee.has_previous %}
+                    <li><a href="?page={{ snippets.previous_page_number }}">Previous</a></li>
+                {% endif %}
+
+                {% if snippets.has_next %}
+                    <li><a href="?page={{ snippets.next_page_number }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+
+{% endblock %}

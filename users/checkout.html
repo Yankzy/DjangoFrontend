@@ -1,0 +1,332 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+    <style>
+       
+/* PRICING TOGGLE */
+
+.pricing-switcher {
+  text-align: center;
+}
+.pricing-switcher .fieldset {
+  display: inline-block;
+  position: relative;
+  padding: 5px;
+  border-radius: 50em;
+  background-color: lightgray;
+}
+.pricing-switcher input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+}
+.pricing-switcher label {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  float: left;
+  width: 150px;
+  height: 40px;
+  line-height: 40px;
+  cursor: pointer;
+  color: #0080dc;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: bold;
+  transition-delay: 0.1s;
+  transition: color 0.3s ease;
+}
+.pricing-switcher input[type="radio"]:checked + label {
+  color: #ffffff;
+  text-decoration: none;
+}
+.pricing-switcher .switch {
+  /* floating background */
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  height: 40px;
+  width: 150px;
+  background-color: #0080dc;
+  border-radius: 50em;
+  transition: transform 0.3s;
+}
+.pricing-switcher input[type="radio"]:checked + label + .switch,
+.pricing-switcher input[type="radio"]:checked + label:nth-of-type(n) + .switch {
+  /* use label:nth-of-type(n) to fix a bug on safari with multiple adjacent-sibling selectors*/
+  -webkit-transform: translateX(150px);
+  -moz-transform: translateX(150px);
+  -ms-transform: translateX(150px);
+  -o-transform: translateX(150px);
+  transform: translateX(150px);
+}
+
+
+    </style>
+
+    <!-- Pricing -->
+    <div id="pricing" class="cards-2 sec1">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="h2-heading">Choose A Plan</h2>
+                    <h4 class="h4-heading">Save 23% on Annual Plans</h4>
+
+                    <div class="pricing-switcher">
+                        <div class="fieldset">
+                          <input type="radio" name="group-a" value="monthly" id="monthly-1" checked onclick="check()" ;>
+                          <label for="monthly-1">Monthly</label>
+                          <input type="radio" name="group-a" value="annualy" id="annualy-1" onclick="check()" ;>
+                          <label for="annualy-1">Annualy</label>
+                          <span class="switch"></span>
+                        </div>
+                    </div>
+            
+                </div> <!-- end of col -->
+            </div> <!-- end of row -->
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <!-- Card-->
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title">Payroll Plan</div>
+                            <div class="price"><span class="currency">$</span><span class="value" id="price1">19</span></div>
+                            <div class="frequency" id="frequency">monthly</div>
+                            <div class="divider"></div>
+                            <ul class="list-unstyled li-space-lg">
+                                <li class="media">
+                                    <i class="fas fa-check"></i><div class="media-body">Payroll Automation</div>
+                                </li>
+                                <li class="media">
+                                    <i class="fas fa-check"></i><div class="media-body">No friction time tracking</div>
+                                </li>
+                                <li class="media">
+                                    <i class="fas fa-check"></i><div class="media-body">Calculate taxes and deductions automatically</div>
+                                </li>
+                                <li class="media">
+                                    <i class="fas fa-check"></i><div class="media-body">Generate paystubs in pdf</div>
+                                </li>
+                                <li class="media">
+                                    <i class="fas fa-check"></i><div class="media-body">Download paystubs anytime, on demand</div>
+                                </li>
+                                <li class="media">
+                                    <i class="fas fa-check"></i><div class="media-body">Unlimited employees</div>
+                                </li>
+                                <li class="media">
+                                    <i class="fas fa-check"></i><div class="media-body">No hardware necessary</div>
+                                </li>
+                            </ul>
+                            <div class="button-wrapper">
+                                <button class="btn-solid-reg page-scroll" data-scroll-to="ppview" onclick="changeVal('PAYROLL')">CHOOSE</button>
+                            </div>
+                        </div>
+
+                    </div> <!-- end of card -->
+                    <!-- end of card -->
+
+                    <!-- Card-->
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title">Bookkeeping Plan</div>
+                            <div class="price"><span class="currency">$</span><span class="value" id="price2">199</span></div>
+                            <div class="frequency" id="frequency">monthly</div>
+                            <div class="divider"></div>
+                            <ul class="list-unstyled li-space-lg">
+                                <li class="media">
+                                    <i class="fas fa-check"></i><div class="media-body">Payroll Plan</div>
+                                </li>
+                                <li class="media">
+                                    <i class="fas fa-check"></i><div class="media-body">QBO Management</div>
+                                </li>
+                                <li class="media">
+                                    <i class="fas fa-check"></i><div class="media-body">Monthly bank reconciliation</div>
+                                </li>
+                                <li class="media">
+                                    <i class="fas fa-check"></i><div class="media-body">Automate State tax filings</div>
+                                </li>
+                                <li class="media">
+                                    <i class="fas fa-check"></i><div class="media-body">Automate Federal filings (1040 included) </div>
+                                </li>
+                                <li class="media">
+                                    <i class="fas fa-check"></i><div class="media-body">W-2s and 1099s filed and mailed</div>
+                                </li>
+                                <li class="media">
+                                    <i class="fas fa-check"></i><div class="media-body">Post-tax deductions and reimbursements</div>
+                                </li>
+                                <li class="media">
+                                    <i class="fas fa-check"></i><div class="media-body">Sick leave and paid time off</div>
+                                </li>
+                               
+                            </ul>
+                            <div class="button-wrapper">
+                                <button class="btn-solid-reg page-scroll" data-scroll-to="ppview" onclick="changeVal('BOOKKEEPING')">CHOOSE</button>
+                            </div>
+                        </div>
+
+                    </div> <!-- end of card -->
+                    <!-- end of card -->
+
+                    <!-- Card-->
+                    <div class="card">
+                        <!--<div class="label">
+                            <p class="best-value">Best Value</p>
+                        </div> -->
+                        <div class="card-body">
+                            <div class="card-title">administrative Plan </div>
+                            <div class="price"><span class="currency">$</span><span class="value" id="price3">499</span></div>
+                            <div class="frequency" id="frequency">monthly</div>
+                            <div class="divider"></div>
+                            <ul class="list-unstyled li-space-lg">
+                                <li class="media">
+                                    <i class="fas fa-check"></i><div class="media-body">Payroll plan</div>
+                                </li>
+                                <li class="media">
+                                    <i class="fas fa-check"></i><div class="media-body">Bookkeeping plan</div>
+                                </li>
+                                <li class="media">
+                                    <i class="fas fa-check"></i><div class="media-body">Tax planning</div>
+                                </li>
+                                <li class="media">
+                                    <i class="fas fa-check"></i><div class="media-body">Business insurance administration</div>
+                                </li>
+                                <li class="media">
+                                    <i class="fas fa-check"></i><div class="media-body">Workers’ compensation administration</div>
+                                </li>
+                                <li class="media">
+                                    <i class="fas fa-check"></i><div class="media-body">Business consulting</div>
+                                </li>
+                            </ul>
+                            <div class="button-wrapper">
+                                <button class="btn-solid-reg page-scroll" data-scroll-to="ppview" onclick="changeVal('ADMINISTRATIVE')">CHOOSE</button>
+                            </div>
+                        </div>
+
+                    </div> <!-- end of card -->
+                    <!-- end of card -->
+
+                </div> <!-- end of col -->
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </div> <!-- end of cards-2 -->
+    <!-- end of pricing -->
+
+
+
+
+
+
+
+    
+    <!-- Paypal payment -->
+    <div class="form" id="ppview" >
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="text-container">
+                        <div class="above-heading">Your Plan</div>
+                        <div id="p-id"><h2></h2></div>
+                        <div><h2><span class="currency">$</span><span id="pvalue">0</span></h2></div>
+                                
+                            <form id="newsletterForm" data-toggle="validator" data-focus="false">
+
+
+                            <!-- Set up a container element for the Paypal button -->
+                            <div id="paypal-button-container"></div>
+                            <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD"></script>
+
+                            <!-- <script src="https://www.paypal.com/sdk/js?client-id=ASAeK295s6bvs6D7L39-s7ZkEuo117iW1hIQ4DPPSlVphoHDEbIYclJU2JKooEABvqYfTK9opnIo1GM7&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script> -->
+                                   <!-- AVXE3lqZjRwRRXglNvLd3rsNrwcdsH15CfhmFVckkkt0yMmmHowFCp-ONNIQfZPwG5Qp0BJ6YkclfDy8 -->
+                        </div>
+
+                    </div> <!-- end of text-container -->
+                </div> <!-- end of col -->
+            </div> <!-- end of row -->
+            
+        </div> <!-- end of container -->
+    </div> <!-- end of form -->
+    <!-- end of Paypal payment -->
+
+
+    <!-- Testimonials -->
+    <div class="slider-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">      
+                    
+                    <!-- Text Slider -->
+                    <div class="slider-container">
+                        <div class="swiper-container text-slider">
+                            <div class="swiper-wrapper">
+                                
+                                <!-- Slide -->
+                                <div class="swiper-slide">
+                                    <div class="image-wrapper">
+                                        <img class="img-fluid" src=" {% static 'users/images/testimonial-1.jpg' %} " alt="alternative">
+                                    </div> <!-- end of image-wrapper -->
+                                    <div class="text-wrapper">
+                                        <div class="testimonial-text">I started to use dojo payrol about a year ago and never stopped since then. It does all the State and Federal tax reporting with bi-weekly paystubs.</div>
+                                        <div class="testimonial-author">Jude Thorn - Online Marketer</div>
+                                    </div> <!-- end of text-wrapper -->
+                                </div> <!-- end of swiper-slide -->
+                                <!-- end of slide -->
+
+                                <!-- Slide -->
+                                <div class="swiper-slide">
+                                    <div class="image-wrapper">
+                                        <img class="img-fluid" src=" {% static 'users/images/testimonial-2.jpg' %} " alt="alternative">
+                                    </div> <!-- end of image-wrapper -->
+                                    <div class="text-wrapper">
+                                        <div class="testimonial-text">Awesome features for the money. I never thought such a low ammount of money would save me so much time and headaches.</div>
+                                        <div class="testimonial-author">Roy Smith - Barber</div>
+                                    </div> <!-- end of text-wrapper -->
+                                </div> <!-- end of swiper-slide -->
+                                <!-- end of slide -->
+
+                                <!-- Slide -->
+                                <div class="swiper-slide">
+                                    <div class="image-wrapper">
+                                        <img class="img-fluid" src=" {% static 'users/images/testimonial-3.jpg' %} " alt="alternative">
+                                    </div> <!-- end of image-wrapper -->
+                                    <div class="text-wrapper">
+                                        <div class="testimonial-text">This is the best payroll automation service ever. Customer for life.</div>
+                                        <div class="testimonial-author">Marsha Singer - eCommerce</div>
+                                    </div> <!-- end of text-wrapper -->
+                                </div> <!-- end of swiper-slide -->
+                                <!-- end of slide -->
+
+                                <!-- Slide -->
+                                <div class="swiper-slide">
+                                    <div class="image-wrapper">
+                                        <img class="img-fluid" src=" {% static 'users/images/testimonial-4.jpg' %} " alt="alternative">
+                                    </div> <!-- end of image-wrapper -->
+                                    <div class="text-wrapper">
+                                        <div class="testimonial-text">Best payroll service out there. I especially love the Tax Reporting Tools because it gives me such a peace of mind knowing an AI will never forget to do my taxes like I do all the time, thank you guys.</div>
+                                        <div class="testimonial-author">Ronda Louis - Salon Owner</div>
+                                    </div> <!-- end of text-wrapper -->
+                                </div> <!-- end of swiper-slide -->
+                                <!-- end of slide -->
+
+                            </div> <!-- end of swiper-wrapper -->
+                            
+                            <!-- Add Arrows -->
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                            <!-- end of add arrows -->
+
+                        </div> <!-- end of swiper-container -->
+                    </div> <!-- end of slider-container -->
+                    <!-- end of text slider -->
+
+                </div> <!-- end of col -->
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </div> <!-- end of slider-2 -->
+    <!-- end of testimonials -->
+
+  
+    
+    
+{% endblock content %}
+

@@ -1,0 +1,21 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+
+    <!-- Header -->
+    <header id="header" class="ex-2-header">
+        <div class="text-container">
+            <h1 class="display-3">Welcome To Dojo Payroll</h1>
+            <p class="lead"><strong>Please proceed to the dashboard</strong> to setup your company profile, then you are all set to add employees.</p>
+            <hr>
+            <p class="lead">
+              <a class="btn btn-primary btn-sm" href=" {% url 'dashboard' %} " role="button">Continue to dashboard</a>
+            </p>
+          </div>
+    </header> <!-- end of ex-header -->
+    <!-- end of header -->
+
+
+{% endblock content %}

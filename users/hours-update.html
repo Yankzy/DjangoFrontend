@@ -1,0 +1,46 @@
+{% extends 'users/elegant.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load humanize %}
+{% load mathfilters %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+
+{% block main %}
+
+
+
+    <div class="container-fluid">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        
+        <div class="row">
+            <!-- column -->
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div>
+                                <h5 class="card-title">Hours For <strong> {{ em.hourly_rate }} </strong> - Last 60 Days</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+
+                        <form method="post">{% csrf_token %}
+                            {{ form.as_table }}
+                            <input type="submit" value="Update">
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+{% endblock %}
