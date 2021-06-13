@@ -1,0 +1,58 @@
+/* MY CUSTOM CSS */
+
+/* PRICING TOGGLE */
+
+.pricing-switcher {
+  text-align: center;
+}
+.pricing-switcher .fieldset {
+  display: inline-block;
+  position: relative;
+  padding: 5px;
+  border-radius: 50em;
+  background-color: lightgray;
+}
+.pricing-switcher input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+}
+.pricing-switcher label {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  float: left;
+  width: 150px;
+  height: 40px;
+  line-height: 40px;
+  cursor: pointer;
+  color: #0080dc;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: bold;
+  transition-delay: 0.1s;
+  transition: color 0.3s ease;
+}
+.pricing-switcher input[type="radio"]:checked + label {
+  color: #ffffff;
+  text-decoration: none;
+}
+.pricing-switcher .switch {
+  /* floating background */
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  height: 40px;
+  width: 150px;
+  background-color: #0080dc;
+  border-radius: 50em;
+  transition: transform 0.3s;
+}
+.pricing-switcher input[type="radio"]:checked + label + .switch,
+.pricing-switcher input[type="radio"]:checked + label:nth-of-type(n) + .switch {
+  /* use label:nth-of-type(n) to fix a bug on safari with multiple adjacent-sibling selectors*/
+  -webkit-transform: translateX(150px);
+  -moz-transform: translateX(150px);
+  -ms-transform: translateX(150px);
+  -o-transform: translateX(150px);
+  transform: translateX(150px);
+}
